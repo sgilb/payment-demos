@@ -1,7 +1,7 @@
 var payButton = document.getElementById('pay-button');
 var form = document.getElementById('payment-form');
 
-Frames.init('pk_test_4296fd52-efba-4a38-b6ce-cf0d93639d8a');
+Frames.init('pk_test_7d8d24fc-ffdb-4efc-b945-a19847ce319a');
 
 Frames.addEventHandler(Frames.Events.CARD_VALIDATION_CHANGED, function (event) {
     console.log('CARD_VALIDATION_CHANGED: %o', event);
