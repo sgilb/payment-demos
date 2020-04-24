@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iDEAL Payment Verification</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+    <center><img src="./images/img.png" alt="dogo"></center>
+
+    <form id="payment-form" method="POST" action="https://merchant.com/charge-ideal">
+        <div class="one-liner">
+            <label id="issuer-input-label" for="issuer-input">Issuer ID (BIC)</label>
+                <input id="issuer-input" type="text" name="issuer-input" placeholder="e.g. INGBNL2A">
+            <button type="submit" id="pay-button" disabled>
+                PAY €24.99
+            </button>
+        </div>
+    </form>
+
+    <script src="./scripts/script.js"></script>
+</body>
+
+</html>
