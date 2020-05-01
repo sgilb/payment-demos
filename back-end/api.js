@@ -2,8 +2,12 @@ var router = require('express').Router();
 const path = require('path');
 
 // I added the Node SK to make your life easier
-const { Checkout } = require('checkout-sdk-node');
-const cko = new Checkout('sk_test_bf908821-87a2-43bf-9e9f-77a1d4fffed2');
+const {
+    Checkout
+} = require('checkout-sdk-node');
+const cko = new Checkout('sk_test_bf908821-87a2-43bf-9e9f-77a1d4fffed2', {
+    pk: 'pk_test_7d8d24fc-ffdb-4efc-b945-a19847ce319a'
+});
 
 // !!! for iDEAL + Payment Verification  ==>
 
@@ -16,7 +20,9 @@ router.get('/ideal-payment-verification-page', (req, res) => {
 
 router.post('/payIdeal', async (req, res) => {
     // get the bic from the request body
-    const { bic } = req.body;
+    const {
+        bic
+    } = req.body;
 
     try {
         const payment = await cko.payments.request({
@@ -82,7 +88,9 @@ router.get('/frames-line-3ds-card-verification-page', (req, res) => {
 // When you go to /frames-line-3ds-card-verification show the HTML
 router.post('/pay3DS', async (req, res) => {
     // get the token from the request body
-    const { token } = req.body;
+    const {
+        token
+    } = req.body;
 
     try {
         const payment = await cko.payments.request({
@@ -109,7 +117,9 @@ router.post('/pay3DS', async (req, res) => {
 
 // Get payment details
 router.post('/getPaymentDetails', async (req, res) => {
-    const { sessionId } = req.body;
+    const {
+        sessionId
+    } = req.body;
 
     try {
         const details = await cko.payments.get(sessionId);
@@ -120,7 +130,9 @@ router.post('/getPaymentDetails', async (req, res) => {
 });
 
 router.post('/payWithSourceId', async (req, res) => {
-    const { id } = req.body;
+    const {
+        id
+    } = req.body;
 
     try {
         const payment = await cko.payments.request({
@@ -143,6 +155,62 @@ router.get('/pay-with-save-card-page', (req, res) => {
 });
 
 // <== !!! for Frames One Line + 3DS +  Card Verification
+
+// !!! for Google Pay  ==>
+
+// When you go to /buy-with-gpay-page show the HTML
+router.get('/buy-with-gpay-page', (req, res) => {
+    res.sendFile(
+        path.join(__dirname, '../front-end/buy-with-gpay-page/index.html')
+    );
+});
+
+router.post('/payWithGoogle', async (req, res) => {
+    const {
+        signature,
+        protocolVersion,
+        signedMessage
+    } = req.body;
+
+    let tokenResponse;
+
+    console.log('Google token: ', req.body)
+
+    try {
+        tokenResponse = await cko.tokens.request({
+            // type:"googlepay" is inferred
+            token_data: {
+                signature,
+                protocolVersion,
+                signedMessage
+            }
+        });
+    } catch (error) {
+        res.send(500, error);
+    }
+
+    console.log('CKO token: ', tokenResponse.token);
+
+    /* Do payment request w/ token */
+    const token = tokenResponse.token;
+
+    try {
+        const payment = await cko.payments.request({
+            source: {
+                // type:"token" is inferred
+                token: token
+            },
+            currency: 'GBP',
+            amount: 1000, // pence
+            reference: 'GPAY-TEST'
+        });
+        res.send(payment);
+    } catch (error) {
+        res.send(500, error);
+    }
+});
+
+// <== !!! for Google Pay
 
 // !!! <== for The Success or Fail Page
 
