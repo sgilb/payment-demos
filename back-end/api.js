@@ -165,6 +165,13 @@ router.get('/buy-with-gpay-page', (req, res) => {
     );
 });
 
+// When you go to /gpay-confirmation-page show the HTML
+router.get('/gpay-confirmation-page', (req, res) => {
+    res.sendFile(
+        path.join(__dirname, '../front-end/gpay-confirmation-page/index.html')
+    );
+});
+
 router.post('/payWithGoogle', async (req, res) => {
     const {
         signature,
@@ -205,6 +212,20 @@ router.post('/payWithGoogle', async (req, res) => {
             reference: 'GPAY-TEST'
         });
         res.send(payment);
+    } catch (error) {
+        res.send(500, error);
+    }
+});
+
+// Get payment details
+router.post('/getPaymentById', async (req, res) => {
+    const {
+        id
+    } = req.body;
+
+    try {
+        const details = await cko.payments.get(id);
+        res.send(details);
     } catch (error) {
         res.send(500, error);
     }

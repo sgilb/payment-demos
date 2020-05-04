@@ -173,11 +173,11 @@ function addGooglePayButton() {
  */
 function getGoogleTransactionInfo() {
     return {
-        countryCode: 'US',
-        currencyCode: 'USD',
+        countryCode: 'GB',
+        currencyCode: 'GBP',
         totalPriceStatus: 'FINAL',
         // set to cart total
-        totalPrice: '1.00'
+        totalPrice: '10.00'
     };
 }
 
@@ -249,7 +249,7 @@ function payWithCheckout(googleToken) {
         (response) => {
             console.log('CKO response: ', response);
 
-            window.location.href = '/success';
+            window.location.href = '/gpay-confirmation-page' + '#' + response.id;
         }
     );
 }
