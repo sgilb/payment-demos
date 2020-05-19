@@ -19,11 +19,6 @@ const http = ({ method, route, body }, callback) => {
         .catch((er) => console.log(er));
 };
 
-const urlParams = new URLSearchParams(window.location.search);
-// Here we are simply getting the session ID from the URL
-const SESSION_ID = urlParams.get('cko-session-id');
-let SOURCE_ID = '';
-
 var paymentId = window.location.hash.substring(1)
 
 const showPaymentDetails = () => {

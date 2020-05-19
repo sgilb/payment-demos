@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+
+    <form id="payment-form" method="POST" action="https://merchant.com/charge-klarna">
+        <div id="klarna_container"></div>
+            <center><button type="submit" id="pay-button">
+                Pay £24.99
+            </button></center>
+        
+    </form>
+
+    <script src="./scripts/script.js"></script>
+    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+</body>
+
+</html>

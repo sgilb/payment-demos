@@ -31,7 +31,7 @@ const showSaveCard = () => {
     http(
         {
             method: 'POST',
-            route: '/getPaymentDetails',
+            route: '/getPaymentBySession',
             body: {
                 sessionId: SESSION_ID,
             },

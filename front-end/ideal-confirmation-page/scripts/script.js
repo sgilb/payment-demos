@@ -35,7 +35,7 @@ const showSaveIdeal = () => {
     // then we show a nice thank you page and pay button
     http({
             method: 'POST',
-            route: '/getPaymentDetails',
+            route: '/getPaymentBySession',
             body: {
                 sessionId: SESSION_ID,
             },
