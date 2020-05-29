@@ -207,8 +207,6 @@ router.post('/payKlarna', async (req, res) => {
             success_url: 'http://localhost:4242/klarna-confirmation-page', // route to success
             failure_url: 'http://localhost:4242/fail' // route to failure
         });
-
-        // Only send back the redirection URL
         res.send(payment);
     } catch (error) {
         res.send(500, error);
